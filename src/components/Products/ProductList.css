@@ -1,12 +1,9 @@
-/* ProductList.css */
-
 .product-list-container {
-    padding: 20px;
-  }
-  
-  .product-list-title {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  
+  padding: 20px;
+}
+
+.product-list-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}

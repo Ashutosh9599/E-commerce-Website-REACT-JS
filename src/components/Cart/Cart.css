@@ -1,4 +1,3 @@
-/* Cart.css */
 .cart-modal {
   transition: opacity 0.3s ease-in-out;
 }
@@ -28,7 +27,6 @@
   margin-top: 10px;
 }
 
-/* Adjust modal animation */
 .modal {
   transition: opacity 0.3s ease-in-out;
 }

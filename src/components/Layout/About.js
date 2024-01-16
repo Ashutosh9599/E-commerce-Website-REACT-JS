@@ -3,25 +3,25 @@ import './About.css';
 
 const About = () => {
   return (
-    <div className="about-container">
-      <h2>About Our Ecommerce Merch Store</h2>
+    <div className="about-content">
+      <h2>About Our Music Band</h2>
       <p>
-        Welcome to our ecommerce merchandise store! We are passionate about providing high-quality
-        merchandise that reflects the essence of our brand. Whether you're a fan, a customer, or just
-        curious, here's a little bit about who we are and what we stand for.
+        Welcome to our official music band website! We are passionate about creating music
+        and sharing our artistic journey with you. Our band consists of talented musicians
+        dedicated to delivering unforgettable performances and unique musical experiences.
       </p>
       <p>
-        Our mission is to deliver unique and stylish products that not only represent our brand but
-        also resonate with our customers. We believe in quality, creativity, and customer satisfaction.
+        Join us at our upcoming shows where you can immerse yourself in the energy of our live
+        performances. Purchase tickets to secure your spot and be part of the excitement!
       </p>
       <p>
-        Explore our store and discover a wide range of merchandise, from trendy apparel to accessories
-        that complement your style. We strive to keep our collections fresh, so there's always something
-        new and exciting to find.
+        Explore our merchandise collection to take home a piece of our music. From t-shirts
+        to exclusive collectibles, our merch is designed to celebrate our music and your
+        connection with our band.
       </p>
       <p>
-        Thank you for being a part of our community and supporting our ecommerce journey. Feel free to
-        reach out if you have any questions or if there's anything we can assist you with.
+        Thank you for being a part of our musical journey. We look forward to creating
+        memorable moments with you!
       </p>
     </div>
   );

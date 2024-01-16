@@ -6,7 +6,7 @@ import ProductList from './components/Products/ProductList';
 import Header from './components/Layout/Header';
 import About from './components/Layout/About';
 import Footer from './components/Layout/Footer';
-
+import Home from './components/Layout/Home';
 const App = () => {
   return (
     <Router>
@@ -16,9 +16,9 @@ const App = () => {
           <Routes>
             <Route path="/store" element={<ProductList />} />
             <Route path="/about" element={<About />} />
-            <Route path="/" element={<ProductList />} />
+            <Route path="/" element={<Home />} />
           </Routes>
-          <Footer/>
+          <Footer />
         </Fragment>
       </ProductContextProvider>
     </Router>
