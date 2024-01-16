@@ -2,14 +2,12 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import './Cart.css';
 
-const Cart = ({ cartElements, onClose, onRemoveItem }) => {
+const Cart = ({ cartElements, onClose }) => {
   const calculateTotalPrice = () => {
     return cartElements.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   const handlePurchase = () => {
-    // Implement the logic for handling the purchase
-    // This could involve sending the order to a backend or any other appropriate action
     console.log("Purchase clicked!");
   };
 
@@ -26,9 +24,6 @@ const Cart = ({ cartElements, onClose, onRemoveItem }) => {
               <p>{item.title}</p>
               <p>${item.price}</p>
               <p>Quantity: {item.quantity}</p>
-              <Button variant="danger" onClick={() => onRemoveItem(index)}>
-                Remove
-              </Button>
             </div>
           </div>
         ))}

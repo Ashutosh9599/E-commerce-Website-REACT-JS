@@ -1,5 +1,10 @@
-import React, { createContext, useContext } from 'react';
-import ProductContext from './ProductContext';
+import React, { createContext, useContext, useState } from 'react';
+
+const ProductContext = createContext();
+
+export const useProductContext = () => {
+  return useContext(ProductContext);
+};
 
 const productsArr = [
   {
@@ -25,7 +30,25 @@ const productsArr = [
 ];
 
 const ProductContextProvider = ({ children }) => {
-  return <ProductContext.Provider value={productsArr}>{children}</ProductContext.Provider>;
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (product) => {
+    const existingProductIndex = cart.findIndex((item) => item.title === product.title);
+
+    if (existingProductIndex !== -1) {
+      const updatedCart = [...cart];
+      updatedCart[existingProductIndex].quantity += 1;
+      setCart(updatedCart);
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
+  };
+
+  return (
+    <ProductContext.Provider value={{ productsArr, cart, addToCart }}>
+      {children}
+    </ProductContext.Provider>
+  );
 };
 
 export default ProductContextProvider;

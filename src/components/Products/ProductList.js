@@ -1,17 +1,17 @@
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import ProductItem from './ProductItem';
-import { useProductContext } from '../Context/ProductContext';
-import "./ProductList.css";
+import { useProductContext } from '../Context/ProductContextProvider';
+import './ProductList.css';
 
 const ProductList = () => {
-  const productsArr = useProductContext();
+  const { productsArr, addToCart } = useProductContext();
 
   return (
     <Container className="mt-4">
       <Row>
         {productsArr.map((product, index) => (
-          <ProductItem key={index} {...product} />
+          <ProductItem key={index} {...product} onAddToCart={() => addToCart(product)} />
         ))}
       </Row>
     </Container>

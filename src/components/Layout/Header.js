@@ -3,30 +3,12 @@ import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
-import { useProductContext } from '../Context/ProductContext';
+import { useProductContext } from '../Context/ProductContextProvider';
 import Cart from '../Cart/Cart';
 
 const Header = () => {
+    const { cart } = useProductContext();
     const [showCart, setShowCart] = useState(false);
-    const productsArr = useProductContext();
-    const cartElements = [  {
-        title: 'Colors',
-        price: 100,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-        quantity: 2,
-      },
-      {
-        title: 'Black and white Colors',
-        price: 50,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-        quantity: 3,
-      },
-      {
-        title: 'Yellow and Black Colors',
-        price: 70,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-        quantity: 1,
-      },]; 
 
     const handleCartClick = () => {
         setShowCart(true);
@@ -36,34 +18,33 @@ const Header = () => {
         setShowCart(false);
     };
 
-    const handleRemoveItem = (index) => {
-        // Implement logic to remove item from the cart array
-        // This will be added in the next task as per your instructions
-    };
+    const totalCartItems = cart ? cart.length : 0;
+
     return (
         <React.Fragment>
             <Navbar bg="dark" expand="lg">
                 <Container className='header-container'>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto justify-content-center"> {/* Center the items */}
+                        <Nav className="mr-auto justify-content-center">
                             <Nav.Link href="#home">Home</Nav.Link>
                             <Nav.Link href="#store">Store</Nav.Link>
                             <Nav.Link href="#about">About</Nav.Link>
                         </Nav>
-                        <Nav className="ml-auto"> {/* Move to the far right */}
+                        <Nav className="ml-auto">
                             <Button variant="outline-light" onClick={handleCartClick}>
-                                <FontAwesomeIcon icon={faShoppingCart} />{/* Cart icon */}
+                                <FontAwesomeIcon icon={faShoppingCart} />
                                 <span className="cart-name">Your Cart</span>
-                                <span className="cart-count">{cartElements.length}</span> {/* Cart count */}
+                                {/* Display the cart count */}
+                                <span className="cart-count">{totalCartItems}</span>
                             </Button>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
             {showCart && (
-        <Cart cartElements={cartElements} onClose={handleCloseCart} onRemoveItem={handleRemoveItem} />
-      )}
+                <Cart cartElements={cart} onClose={handleCloseCart} />
+            )}
         </React.Fragment>
     );
 };
