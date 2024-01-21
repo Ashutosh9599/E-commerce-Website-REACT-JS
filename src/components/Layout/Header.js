@@ -31,7 +31,8 @@ const Header = () => {
                             <Nav.Link as={NavLink} to="/" activeclassname="active">Home</Nav.Link>
                             <Nav.Link as={NavLink} to="/store" activeclassname="active">Store</Nav.Link>
                             <Nav.Link as={NavLink} to="/about" activeclassname="active">About</Nav.Link>
-                            <Nav.Link as={NavLink} to="/contact" activeclassname="active">Contact_us</Nav.Link>
+                            <Nav.Link as={NavLink} to="/login" activeclassname="active">Login</Nav.Link>
+                            <Nav.Link as={NavLink} to="/contact" activeclassname="active">Contact-us</Nav.Link>
                         </Nav>
                         <Nav className="ml-auto">
                             <Button variant="outline-light" onClick={handleCartClick}>

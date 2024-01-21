@@ -8,7 +8,8 @@ import About from './components/Layout/About';
 import Footer from './components/Layout/Footer';
 import Home from './components/Layout/Home';
 import Contact from './components/Layout/Contact';
-import ProductDetail from './components/Products/ProductDetail'; // Import the ProductDetail component
+import ProductDetail from './components/Products/ProductDetail';
+import Login from './components/Layout/Login';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/store" element={<ProductList />} />
             <Route path="/store/:id" element={<ProductDetail />} />
             <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} /> 
             <Route path="/contact" element={<Contact />} />
             <Route path="/" element={<Home />} />
           </Routes>

@@ -35,6 +35,7 @@ const productsArr = [
 
 const ProductContextProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [token, setToken] = useState(null);
 
   const addToCart = (product) => {
     const existingProductIndex = cart.findIndex((item) => item.title === product.title);
@@ -47,9 +48,20 @@ const ProductContextProvider = ({ children }) => {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
   };
+  
+  const login = (userToken, expiresIn) => {
+    setToken(userToken);
+    // You may want to handle token expiration here if needed
+    // For simplicity, we're not checking the expiration in this example
+  };
+
+  const logout = () => {
+    setToken(null);
+    // Additional cleanup tasks if needed
+  };
 
   return (
-    <ProductContext.Provider value={{ productsArr, cart, addToCart }}>
+    <ProductContext.Provider value={{ productsArr, cart, addToCart,login, logout }}>
       {children}
     </ProductContext.Provider>
   );
