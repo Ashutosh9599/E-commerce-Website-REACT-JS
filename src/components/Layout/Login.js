@@ -1,64 +1,91 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useProductContext } from '../Context/ProductContextProvider';
-import './Login.css'; // Create a CSS file for styling
+import React, { useState, useRef, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Context/ContextProvider';
+import './Login.css';
 
 const Login = () => {
-  const history = useHistory();
-  const { login } = useProductContext(); // Assuming you have a login function in your context
+  const navigate = useNavigate();
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const authCtx = useContext(AuthContext);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const [isLoading, setIsLoading] = useState(false);
 
-    try {
-      // Use Firebase authentication API for login
-      // Replace 'YOUR_FIREBASE_API_KEY' with your actual Firebase API key
-      const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=YOUR_FIREBASE_API_KEY`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          returnSecureToken: true,
-        }),
+  const submitHandler = (event) => {
+    event.preventDefault();
+
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
+    setIsLoading(true);
+
+    const url =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCPEgWiWzichW_XH_xZCBaECXkZOTBqyxc';
+
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: enteredEmail,
+        password: enteredPassword,
+        returnSecureToken: true,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        setIsLoading(false);
+        if (res.ok) {
+          return res.json();
+        } else {
+          return res.json().then((data) => {
+            let errorMessage = 'Authentication failed!';
+            throw new Error(errorMessage);
+          });
+        }
+      })
+      .then((data) => {
+        const expirationTime = new Date(new Date().getTime() + +data.expiresIn * 1000);
+
+        localStorage.setItem('token', data.idToken);
+        localStorage.setItem('expirationTime', expirationTime.toISOString());
+
+        authCtx.login(data.idToken, expirationTime.toISOString());
+        console.log('not-working');
+        // Redirect to the '/store' route
+        navigate('/store');
+        console.log('working');
+      })
+      .catch((err) => {
+        alert(err.message);
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Login successful
-        login(data.idToken, data.expiresIn); // Assuming your context has a login function
-        localStorage.setItem('token', data.idToken); // Store token in localStorage for future use
-        history.push('/store'); // Redirect to the products page
-      } else {
-        // Login failed
-        setError(data.error.message);
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
-      setError('An unexpected error occurred. Please try again.');
-    }
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {error && <p className="error-message">{error}</p>}
-      <form onSubmit={handleLogin}>
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-
-        <button type="submit">Login</button>
-      </form>
+    <div className="container-auth">
+      <section className="auth">
+        <form onSubmit={submitHandler}>
+          <div className="control">
+            <label htmlFor='email'>Your Email</label>
+            <input type='email' id='email' required ref={emailInputRef} />
+          </div>
+          <div className="control">
+            <label htmlFor='password'>Your Password</label>
+            <input
+              type='password'
+              id='password'
+              required
+              ref={passwordInputRef}
+            />
+          </div>
+          <div className="actions">
+            {!isLoading && <button>Login</button>}
+            {isLoading && <p>Sending request...</p>}
+          </div>
+        </form>
+      </section>
     </div>
   );
 };
